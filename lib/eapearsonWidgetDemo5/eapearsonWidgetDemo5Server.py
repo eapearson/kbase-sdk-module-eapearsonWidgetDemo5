@@ -17,12 +17,20 @@ from jsonrpcbase import JSONRPCService, InvalidParamsError, KeywordError, \
 from jsonrpcbase import ServerError as JSONServerError
 
 from biokbase import log
-from eapearsonWidgetDemo5.authclient import KBaseAuth as _KBaseAuth
+from installed_clients.authclient import KBaseAuth as _KBaseAuth
 
 try:
     from ConfigParser import ConfigParser
 except ImportError:
     from configparser import ConfigParser
+
+
+# BEGIN DS-SERVICE-WIDGET-IMPORT
+# Injected by the Dynamic Service Widget Tool
+#
+from widget.widget_handler import get_global_widget_support
+#
+# END DS-SERVICE-WIDGET-IMPORT
 
 DEPLOY = 'KB_DEPLOYMENT_CONFIG'
 SERVICE = 'KB_SERVICE_NAME'
@@ -349,6 +357,23 @@ class Application(object):
         self.auth_client = _KBaseAuth(authurl)
 
     def __call__(self, environ, start_response):
+
+        # BEGIN DS-SERVICE-WIDGET-PATH-HANDLER
+        # Injected by the Dynamic Service Widget Tool
+        #
+        path = environ['PATH_INFO']
+        if path.startswith('/widgets'):
+            widget_support = get_global_widget_support()
+            if widget_support is not None:
+                status, response_headers, content = widget_support.handle_widget(environ)
+                start_response(status, response_headers)
+                return [content]
+            else:
+                raise Exception('Widget support not yet available for /widgets!')
+        #
+        # END DS-SERVICE-WIDGET-PATH-HANDLER
+
+
         # Context object, equivalent to the perl impl CallContext
         ctx = MethodContext(self.userlog)
         ctx['client_ip'] = getIPAddress(environ)
