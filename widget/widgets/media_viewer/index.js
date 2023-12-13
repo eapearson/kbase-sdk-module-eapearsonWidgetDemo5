@@ -105,23 +105,23 @@ async function render({token, ref, workspaceURL, uiOrigin}) {
 }
 
 const {ref, token, workspaceURL, uiOrigin} = (() => {
-    if (window.parent === window) {
-        // Self-hosted for development, so get everything from the browser.
-        const url = new URL(window.location.href);
+    // if (window.parent === window) {
+    //     // Self-hosted for development, so get everything from the browser.
+    //     const url = new URL(window.location.href);
 
-        const ref = url.searchParams.get('ref');
-        const token = url.searchParams.get('token');
-        const env = url.searchParams.get('env') || 'ci';
-        const uiOrigin =  `https://${env}.kbase.us`;
+    //     const ref = url.searchParams.get('ref');
+    //     const token = url.searchParams.get('token');
+    //     const env = url.searchParams.get('env') || 'ci';
+    //     const uiOrigin =  `https://${env}.kbase.us`;
 
-        // TODO: import config from python.
+    //     // TODO: import config from python.
 
-        const workspaceURL = `https://${env}.kbase.us/services/ws`;
+    //     const workspaceURL = `https://${env}.kbase.us/services/ws`;
 
-        console.log('DEV MODE', ref, token);
+    //     console.log('DEV MODE', ref, token);
 
-        return {ref, token, workspaceURL, uiOrigin};
-    } else {
+    //     return {ref, token, workspaceURL, uiOrigin};
+    // } else {
         // In an iframe; For now, we also get everything from the url, but we'll change
         // that soon to simulate the Narrative.
 
@@ -143,6 +143,8 @@ const {ref, token, workspaceURL, uiOrigin} = (() => {
             return authCookie[0][1];
         })();
 
+        console.log('TOKEN', token);
+
         // TODO: check the token... or just use it, and if it fails, deal with it.
 
         // Construct a ui origin based on some assumptions.
@@ -161,23 +163,22 @@ const {ref, token, workspaceURL, uiOrigin} = (() => {
         const kbaseEndpoint = (() => {
             if (window.location.hostname.endsWith('kbase.us')) {
                 if (window.location.hostname.startsWith('narrative.')) {
-                    return `${window.location.origin}/services/`;
-                } else {
                     return 'https://kbase.us/services/';
+                } else {
+                    return `${window.location.origin}/services/`;
                 }
             } else {
                 return 'https://ci.kbase.us/services/';
             }
         })();
 
-       
         // const env = url.searchParams.get('env') || 'ci';
         // const uiOrigin =  `https://${env}.kbase.us`;
 
         const workspaceURL = `${kbaseEndpoint}ws`;
 
         return {ref, token, workspaceURL, uiOrigin};
-    }
+    // }
 })();
 
 async function main(props) {
