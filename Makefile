@@ -28,7 +28,7 @@ compile:
 	#./widget/scripts/fix-server-file.sh "${SERVICE_CAPS}"
 	# END DS-WIDGET COMPILE-FIX
 	# cheap server hack for debugging
-	cp lib/eapearsonWidgetDemo3/eapearsonWidgetDemo3Server-ds.py lib/eapearsonWidgetDemo3/eapearsonWidgetDemo3Server.py
+	cp lib/eapearsonWidgetDemo5/eapearsonWidgetDemo5Server-ds.py lib/eapearsonWidgetDemo3/eapearsonWidgetDemo5Server.py
 
 
 build:
