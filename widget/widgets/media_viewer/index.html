@@ -10,7 +10,6 @@
         <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/sc-2.2.0/datatables.min.js"></script>
         <!-- These are all the KBase / custom files we need -->
         <!-- <link href="/widgets/media_viewer/widgets/static/style.css" rel="stylesheet"> -->
-        <base href="http://localhost:5100/widgets/media_viewer">
         <!-- <script src="/widgets/assets/js/lib.js"></script>
         <script src="/widgets/assets/js/client.js"></script>
         <link href="/widgets/media_viewer/style.css" rel="stylesheet"> -->
@@ -193,10 +192,24 @@
                     });
                 }
 
+                function fixImages() {
+                    const images = document.querySelectorAll('img');
+                    images.forEach((image) => {
+                        const raw_src = new URL(image.src);
+                        // NB pathname already has a / prefixed.
+                        raw_src.pathname = `${widgetBasePath}${raw_src.pathname}`;
+                        image.src = raw_src.toString();
+                    });
+                }
+
+                // Shared resources, so accessed from 'assets'
                 await addScript('widgets/assets/js/lib.js');
                 await addScript('widgets/assets/js/client.js');
+
+                // Own resources, so accessed through the widget, which maps here.
                 await addStylesheet('widgets/media_viewer/style.css');
                 addScript('widgets/media_viewer/index.js');
+                fixImages();
             }
             window.addEventListener('load', () => {
                 main();
