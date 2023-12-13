@@ -25,8 +25,11 @@ compile:
 		--pyimplname $(SERVICE_CAPS).$(SERVICE_CAPS)Impl;
 	# Insert the Dynamic Server Widget code into the server file
 	# BEGIN DS-WIDGET COMPILE-FIX
-	./widget/scripts/fix-server-file.sh "${SERVICE_CAPS}"
+	#./widget/scripts/fix-server-file.sh "${SERVICE_CAPS}"
 	# END DS-WIDGET COMPILE-FIX
+	# cheap server hack for debugging
+	cp lib/eapearsonWidgetDemo3/eapearsonWidgetDemo3Server-ds.py lib/eapearsonWidgetDemo3/eapearsonWidgetDemo3Server.py
+
 
 build:
 	chmod +x $(SCRIPTS_DIR)/entrypoint.sh

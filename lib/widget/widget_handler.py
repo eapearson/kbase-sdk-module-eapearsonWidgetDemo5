@@ -37,17 +37,61 @@ class WidgetSupport(object):
         print("BASE PATH", self.base_path)
 
         result = re.match(r'^((?:.+)://(?:.+?))(?:/.*)?$', config['kbase-endpoint'])
-        self.ui_origin = result.group(1)
+
+        origin = result.group(1)
+
+        #
+        # UI origin is designed to match the kbase deploy environment, not this service,
+        # which may be running locally.
+        #
+        if origin == 'https://kbase.us':
+            self.ui_origin = 'https://narrative.kbase.us'
+        else:
+            self.ui_origin = origin
 
         print("UI ORIGIN", self.ui_origin)
 
-        pass
+
+        #
+        # Here we create a set of origins and urls that point back to this service.
+        #
+
+        if self.runtime_mode == "DEVELOPMENT":
+            #
+            # If running locally, the url should be something like http://localhost:5100
+            #
+
+            # 
+            # TODO: need to get the local url somehow; can we assume it is
+            # http://localhost? THen all we need is the port
+            #
+            port = 5100
+            self.service_origin = f'http://localhost:{port}'
+
+            print('SERVICE ORIGIN', self.service_origin)
+
+            self.service_url = self.service_origin + self.base_path
+
+            print('SERVICE URL', self.service_url)
+        else:
+            #
+            # If not local, then the base origin is still the deploy env.
+            #
+            self.service_origin = origin
+
+            print('SERVICE ORIGIN', self.service_origin)
+
+            self.service_url = origin + self.base_path
+
+            print('SERVICE URL', self.service_url)
 
     def get_widget_config(self):
         return {
             "runtime_mode": self.runtime_mode,
             "base_path": self.base_path,
-            "ui_origin": self.ui_origin
+            "ui_origin": self.ui_origin,
+            "service_origin": self.service_origin,
+            "service_url": self.service_url
         }
 
     def has_widget(self, name):

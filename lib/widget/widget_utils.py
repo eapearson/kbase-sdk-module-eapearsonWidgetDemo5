@@ -178,8 +178,10 @@ class WidgetBase:
     def get_base_path(self):
        return self.widget_config.get('base_path')
 
-    def get_asset_path(self):
-       return os.path.join(self.widget_config.get('base_path'), 'assets')
+    def get_asset_url(self):
+       return os.path.join(self.widget_config.get('service_url'), 'widgets', 'assets')
 
-    def get_widget_asset_path(self):
-        return os.path.join(self.widget_config.get('base_path'), 'assets', self.widget_module_name)
+    def get_widget_asset_url(self):
+        return os.path.join(self.widget_config.get('service_url'), 'widgets', 'assets', self.widget_module_name)
+
+        

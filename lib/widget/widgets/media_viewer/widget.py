@@ -54,6 +54,6 @@ class Widget(WidgetBase):
             'media_object': media_object,
             'ui_origin': self.widget_config.get('ui_origin'),
             'base_path': self.widget_config.get('base_path'),
-            'asset_path': self.get_asset_path(),
-            'widget_asset_path': self.get_widget_asset_path()
+            'asset_url': self.get_asset_url(),
+            'widget_asset_url': self.get_widget_asset_url()
         }

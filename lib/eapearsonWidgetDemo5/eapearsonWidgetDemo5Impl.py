@@ -8,6 +8,7 @@ from installed_clients.KBaseReportClient import KBaseReport
 # Injected by the Dynamic Service Widget Tool
 #
 from widget.widget_handler import WidgetSupport, set_global_widget_support
+
 #
 # END DS-SERVICE-WIDGET-IMPORT
 #END_HEADER
@@ -93,6 +94,8 @@ class eapearsonWidgetDemo5:
         #BEGIN_STATUS
         returnVal = {'state': "OK",
                      'message': "",
+                     'environ': ctx.get('environ'),
+                     'environ_omitted': ctx.get('environ_omitted'),
                      'version': self.VERSION,
                      'git_url': self.GIT_URL,
                      'git_commit_hash': self.GIT_COMMIT_HASH}
