@@ -6,9 +6,9 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
         <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/sc-2.2.0/datatables.min.css" rel="stylesheet">
         <script src="https://cdn.datatables.net/v/bs5/dt-1.13.6/sc-2.2.0/datatables.min.js"></script>
-        <link href="/services/servicewidgetdemo/widgets/static/style.css" rel="stylesheet">
-        <script src="/widgets/assets/js/lib.js"></script>
-        <link href="/widgets/media-viewer/style.css" rel="stylesheet">
+        <!-- <link href="{{ base_path }}/widgets/assets/style.css" rel="stylesheet"> -->
+        <script src="{{ asset_path }}js/lib.js"></script>
+        <link href="{{ widget_asset_path }}/style.css" rel="stylesheet">
     </head>
     <body>
         <ul class="nav nav-tabs" role="tablist" id="media-tabs">
@@ -163,7 +163,7 @@
                     </p>
                     <p>
                         We also enhance the viewer by showing a custom broken-image image if the compound
-                        image was not found. It looks like <img src="/services/servicewidgetdemo/widgets/media-viewer/static/broken-image.png" alt="Missing image image">
+                        image was not found. It looks like <img src="{{ widget_asset_path }}/broken-image.png" alt="Missing image image">
                     </p>
                 </div>
             </div>
